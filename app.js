@@ -3,7 +3,6 @@ const fs = require('fs');
 const express = require('express');
 const app = express();
 
-// Middleware para analisar o corpo das solicitações POST em formato JSON
 app.use(express.json());
 
 app.get('/home', (req, res) => {
@@ -29,7 +28,6 @@ app.get('/cadastrar', (req, res) => {
     const nome = req.query.nome;
   
     if (!cpf || !nome) {
-      // Um ou ambos os parâmetros estão faltando na solicitação
       return res.status(400).json({ error: 'CPF e nome são obrigatórios' });
     }
   
@@ -38,10 +36,8 @@ app.get('/cadastrar', (req, res) => {
       nome,
     };
   
-    // Atualiza o objeto 'user' com o novo usuário
     users[novoUsuario.cpf] = novoUsuario;
   
-    // Escreve o objeto atualizado de volta no arquivo JSON
     fs.writeFile('./baseclientes.json', JSON.stringify(users, null, 2), (err) => {
       if (err) {
         console.error('Erro ao escrever no arquivo JSON:', err);

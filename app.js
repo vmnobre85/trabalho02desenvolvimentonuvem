@@ -28,26 +28,11 @@ app.get('/cadastrar', (req, res) => {
     const nome = req.query.nome;
   
     if (!cpf || !nome) {
-      return res.status(400).json({ error: 'CPF e nome são obrigatórios' });
+      res.status(400).json({ error: 'CPF e nome são obrigatórios' });
+    } else {
+      res.json({ msg: 'Usuário cadastrado com sucesso' });
     }
-  
-    const novoUsuario = {
-      cpf,
-      nome,
-    };
-  
-    users[novoUsuario.cpf] = novoUsuario;
-  
-    fs.writeFile('./baseclientes.json', JSON.stringify(users, null, 2), (err) => {
-      if (err) {
-        console.error('Erro ao escrever no arquivo JSON:', err);
-        return res.status(500).json({ error: 'Erro ao salvar os dados' });
-      }
-  
-      console.log('Novo usuário adicionado com sucesso.');
-      res.json({ msg: 'Novo usuário adicionado com sucesso' });
-    });
-});
+  });
 
 app.listen(3000, () => {
     console.log('Servidor está iniciado na porta 3000');
